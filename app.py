@@ -98,7 +98,7 @@ def login():
                                 entries = db2.fetch().items
                                 for entry in entries:
                                     if entry['date'] == current_date:
-                                        return db2.update({'key':entry['key']}{'text': data})
+                                        return db2.update({'key':entry['key']},{'text': data})
 
 
                         def get_data(user):
