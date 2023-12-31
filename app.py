@@ -25,10 +25,7 @@ import functions.home, functions.ai, functions.emo, functions.add
 
 
 def login():
-    if users != []:
-        pass
-    else:
-        users = fetch_users()
+    users = fetch_users()
     emails = []
     usernames = []
     passwords = []
