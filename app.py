@@ -101,11 +101,11 @@ def login():
                             for entry in entries:
                                
                                 if entry['username'] == user and entry['key'] == date and entry['text'] is not None:
-                                    
+                                   
                                     return entry['text']
-                                else:
+                                
                             
-                                    return ""
+                            return ""
 
 
                         def get_dates():
