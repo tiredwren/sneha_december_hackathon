@@ -93,20 +93,22 @@ def login():
                     
                         def save_data(data):
                             current_date = datetime.now().strftime("%Y/%m/%d")
-                            if current_date in get_dates():
-                                db2.update({'text':data},str(current_date))
-                            else: 
+                            
+                            entries = db2.fetch().items
+                            existing_entry = next((entry for entry in entries if entry['username'] == user and entry['key'] == current_date), None)
+
+                            if existing_entry:
+                                db2.update({'text': data}, existing_entry.key)
+                            else:
                                 db2.put({'username': user, 'key': current_date, 'text': data})
 
                         def get_data(user, date):
                             entries = db2.fetch().items
                             for entry in entries:
-                               
-                                if entry['username'] == user and entry['key'] == date and entry['text'] is not None:
-                                    
-                                    return entry['text']
-                            
+                                if entry['username'] == user and entry['key'] == date and entry.get('text') is not None:
+                                    return entry.get('text')
                             return ""
+
 
 
                         def get_dates():
