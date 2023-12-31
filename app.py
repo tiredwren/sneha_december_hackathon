@@ -91,14 +91,13 @@ def login():
 
                         def save_data(data):
                             current_date = datetime.now().strftime("%Y/%m/%d")
-                            current_time = datetime.now().strftime("%Y/%m/%d %H/%m/%s")
-                            return db2.put({'key': current_time, 'username': user, 'text': data})
+                            return db2.put({'username': user, 'date': current_date, 'text': data})
 
 
                         def get_data(user):
                             entries = db2.fetch().items
                             for entry in entries:
-                                if entry['username'] == user and entry['key'.startswith] == datetime.now().strftime("%Y/%m/%d") and entry['text']!=None:
+                                if entry['username'] == user and entry['date'] == datetime.now().strftime("%Y/%m/%d") and entry['text']!=None:
                                     return entry['text']
                                 else:
                                     return ""
