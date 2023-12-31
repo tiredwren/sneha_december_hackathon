@@ -146,7 +146,7 @@ def login(users, emails, usernames, passwords):
                                     if old_text == None:
                                         pass
                                     else:
-                                        db2.delete({'username': user, 'key': str(today_date), 'text': old_text})
+                                        db2.delete({'username': user, 'key': bytes(str(today_date), 'utf-8'), 'text': bytes(str(old_text),'utf-8')})
                                     save_data(data)
                                     success_message.empty()
 
