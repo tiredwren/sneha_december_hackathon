@@ -29,7 +29,6 @@ usernames = []
 passwords = []
 
 def login(users, emails, usernames, passwords):
-    
 
     for user in users:
         emails.append(user['key'])
@@ -94,7 +93,7 @@ def login(users, emails, usernames, passwords):
                     
                         def save_data(data):
                             current_date = datetime.now().strftime("%Y/%m/%d")
-                            db2.put({'username': user, 'key': current_date, 'text': data})
+                            db2.put({'username': user, 'text': data}, current_date)
 
                         def get_data(user, date):
                             entries = db2.fetch().items
