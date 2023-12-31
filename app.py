@@ -93,6 +93,13 @@ def login():
                             current_date = datetime.now().strftime("%Y/%m/%d")
                             if current_date not in get_dates():
                                 return db2.put({'username': user, 'date': current_date, 'text': data})
+                            else:
+                                entries = db2.fetch().items
+                                for entry in entries:
+                                    if entry['date'] == current_date:
+                                        old_text=entry['text'] 
+                                db2.delete({'username': user, 'date': current_date, 'text': old_text})
+                                return db2.put({'username': user, 'date': current_date, 'text': data})
 
 
                         def get_data(user):
