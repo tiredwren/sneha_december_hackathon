@@ -17,14 +17,8 @@ def insert_user(email, username, password):
 
 
 def fetch_users():
-    try:
-        users = db.fetch()
-        return users.items
-    except Exception as e:
-        st.error(f"Error fetching users from Deta: {e}")
-        st.write("in fetch_users")
-        return []
-
+    users = db.fetch()
+    return users.items
 
 
 def get_user_emails():
