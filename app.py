@@ -58,6 +58,121 @@ def login():
                 st.sidebar.subheader(f'hello {current_user()}!')
                 Authenticator.logout('log out', 'sidebar')
 
+                with st.sidebar:
+                    selected = option_menu(
+                        menu_title=None,
+                        options=['home', 'diary','AI emotion detection','emotion bank','additional resources'],
+                        icons=[':smile:',':angry','dont','work','pls',]
+                    )
+            
+                if selected == 'home':
+                    functions.home.fun()
+
+                if selected == 'diary':
+                    def diary():
+
+                        pipe_lr = joblib.load(open("model/text_emotion.pkl", "rb"))
+
+                        def predict_emotions(docx):
+                            results = pipe_lr.predict([docx])
+                            return results[0]
+
+                        def get_prediction_proba(docx):
+                            results = pipe_lr.predict_proba([docx])
+                            return results
+
+                        DETA_KEY = 'b0qtmrebnwh_2jMv8GoHJNL7VEBKUyfJcESigLbNHGkL'
+
+                        deta = Deta(DETA_KEY)
+
+                        db2 = deta.Base('diary')
+
+                        user = current_user()
+
+                        def save_data(data):
+                            current_time = datetime.now().strftime("%Y/%m/%d")
+                            return db2.put({'key': current_time, 'username': user, 'text': data})
+
+
+                        def get_data(user):
+                            entries = db2.fetch().items
+                            for entry in entries:
+                                if entry['username'] == user and entry['key'] == datetime.now().strftime("%Y/%m/%d") and entry['text']!=None:
+                                    return entry['text']
+                                else:
+                                    return ""
+
+                        def get_dates():
+                            entries = db2.fetch().items
+                            dates = [entry['key'] for entry in entries if entry['username'] == user]
+                            return dates
+                        
+                        def function():
+
+                            st.title("Personal Diary :notebook:")
+
+                            # access current date:
+                            today_date = datetime.now().strftime("%m/%d/%Y")
+
+                            # change view based on what menu button user clicks
+                            selected = option_menu(
+                                    menu_title=None,
+                                    options=["today", "browse old entries"],
+                                    orientation='horizontal',
+                                    menu_icon='cast',
+                                    icons=['','']
+                            )
+
+
+                            if selected=="today":
+                                current_diary_entry = st.text_area("Today's Entry (" + today_date + "):", value=get_data(user))
+
+                                if st.button("save"):
+                                    # generate success message:
+                                    success_message = st.success("saved.")
+                                    time.sleep(1.5) # wait 2 seconds
+
+                                    # THIS IS NEW : SETTING IN LOCAL STORAGE
+                                    data = current_diary_entry
+                                    save_data(data)
+                                    success_message.empty()
+
+                            elif selected=="browse old entries":
+                                    st.title("select a date to view your entry and a prediction of your overall emotion")
+                                    col1, col2 = st.columns(2)
+                                    with col1:
+                                        st.caption("date")
+                                        #st.write(load_data(key))
+                                        keys = get_dates()
+                                        for key in keys:
+                                            if st.button(f"{key}"):
+                                                st.write(get_data(user))
+                                                with col2:
+                                                    st.caption("mood")
+                                                    prediction = predict_emotions(get_data(user))
+                                                    probability = get_prediction_proba(get_data(user))
+                                                    st.write("{}".format(prediction))
+                                                    st.write("confidence: {}".format(np.max(probability)))
+
+
+                                                    if st.button("close"):
+                                                        pass
+                                            
+
+
+                        function()
+
+                    if __name__=="__main__":
+                        diary()
+
+                if selected == 'AI emotion detection':
+                    functions.ai.ai()
+                if selected == 'emotion bank':
+                    functions.emo.emo()
+                if selected == 'additional resources':
+                    functions.add.add()
+
+
             elif not authentication_status:
                 with info:
                     st.error('Incorrect Password or username')
@@ -68,117 +183,6 @@ def login():
             with info:
                 st.warning('Username does not exist, Please Sign up')
 
-    with st.sidebar:
-        selected = option_menu(
-            menu_title=None,
-            options=['home', 'diary','AI emotion detection','emotion bank','additional resources'],
-            icons=[':smile:',':angry','dont','work','pls',]
-        )
     
-    if selected == 'home':
-        functions.home.fun()
-
-    if selected == 'diary':
-        def diary():
-
-            pipe_lr = joblib.load(open("model/text_emotion.pkl", "rb"))
-
-            def predict_emotions(docx):
-                results = pipe_lr.predict([docx])
-                return results[0]
-
-            def get_prediction_proba(docx):
-                results = pipe_lr.predict_proba([docx])
-                return results
-
-            DETA_KEY = 'b0qtmrebnwh_2jMv8GoHJNL7VEBKUyfJcESigLbNHGkL'
-
-            deta = Deta(DETA_KEY)
-
-            db2 = deta.Base('diary')
-
-            user = current_user()
-
-            def save_data(data):
-                current_time = datetime.now().strftime("%Y/%m/%d")
-                return db2.put({'key': current_time, 'username': user, 'text': data})
-
-
-            def get_data(user):
-                entries = db2.fetch().items
-                for entry in entries:
-                    if entry['username'] == user and entry['key'] == datetime.now().strftime("%Y/%m/%d"):
-                        return entry['text']
-
-            def get_dates():
-                entries = db2.fetch().items
-                dates = [entry['key'] for entry in entries if entry['username'] == user]
-                return dates
-            
-            def function():
-
-                st.title("Personal Diary :notebook:")
-
-                # access current date:
-                today_date = datetime.now().strftime("%m/%d/%Y")
-
-                # change view based on what menu button user clicks
-                selected = option_menu(
-                        menu_title=None,
-                        options=["today", "browse old entries"],
-                        orientation='horizontal',
-                        menu_icon='cast',
-                        icons=['','']
-                )
-
-
-                if selected=="today":
-                    current_diary_entry = st.text_area("Today's Entry (" + today_date + "):", value=get_data(user))
-
-                    if st.button("save"):
-                        # generate success message:
-                        success_message = st.success("saved.")
-                        time.sleep(1.5) # wait 2 seconds
-
-                        # THIS IS NEW : SETTING IN LOCAL STORAGE
-                        data = current_diary_entry
-                        save_data(data)
-                        success_message.empty()
-
-                elif selected=="browse old entries":
-                        st.title("select a date to view your entry and a prediction of your overall emotion")
-                        col1, col2 = st.columns(2)
-                        with col1:
-                            st.caption("date")
-                            #st.write(load_data(key))
-                            keys = get_dates()
-                            for key in keys:
-                                if st.button(f"{key}"):
-                                    st.write(get_data(user))
-                                    with col2:
-                                        st.caption("mood")
-                                        prediction = predict_emotions(get_data(user))
-                                        probability = get_prediction_proba(get_data(user))
-                                        st.write("{}".format(prediction))
-                                        st.write("confidence: {}".format(np.max(probability)))
-
-
-                                        if st.button("close"):
-                                            pass
-                                
-
-
-            function()
-
-        if __name__=="__main__":
-            diary()
-
-    if selected == 'AI emotion detection':
-        functions.ai.ai()
-    if selected == 'emotion bank':
-        functions.emo.emo()
-    if selected == 'additional resources':
-        functions.add.add()
-
 if __name__ == '__main__':
     login()
