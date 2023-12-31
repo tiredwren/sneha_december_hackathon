@@ -92,7 +92,7 @@ def login():
                     
                     
                         def save_data(data):
-                            current_date = datetime.now().strftime("%m/%d/%Y")
+                            current_date = datetime.now().strftime("%Y/%m/%d")
                             return db2.put({'username': user, 'key': current_date, 'text': data})
 
 
@@ -122,7 +122,7 @@ def login():
                             st.title("Personal Diary :notebook:")
 
                             # access current date:
-                            today_date = datetime.now().strftime("%m/%d/%Y")
+                            today_date = datetime.now().strftime("%Y/%m/%d")
 
                             # change view based on what menu button user clicks
                             selected = option_menu(
