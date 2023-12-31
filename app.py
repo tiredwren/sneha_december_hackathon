@@ -100,7 +100,7 @@ def login():
                                 for entry in entries:
                                     if entry['date'] == current_date:
                                         key_str = entry['key']
-                                        return db2.update(key_str, {'text': data})
+                                        return db2.update({'key':key_str}, {'text': data})
 
 
 
