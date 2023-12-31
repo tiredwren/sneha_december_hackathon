@@ -134,7 +134,7 @@ def login():
 
 
                             if selected=="today":
-                                current_diary_entry = st.text_area("Today's Entry (" + today_date + "):", value=get_data(user,datetime.now().strftime("%m/%d/%Y")))
+                                current_diary_entry = st.text_area("Today's Entry (" + today_date + "):", value=get_data(user,today_date))
 
                                 if st.button("save"):
                                     # generate success message:
