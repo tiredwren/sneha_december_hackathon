@@ -22,8 +22,9 @@ def fetch_users():
     while users.last:
         users = db.fetch(last=users.last)
         user_list += users.items
+    users.close()
     return user_list
-
+    
 
 def get_user_emails():
     users = db.fetch()
