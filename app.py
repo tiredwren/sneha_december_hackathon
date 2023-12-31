@@ -88,8 +88,9 @@ def login():
                         db2 = deta.Base('diary')
 
                         user = current_user()
-
-
+                    
+                    
+                    
                         def save_data(data):
                             current_date = datetime.now().strftime("%Y/%m/%d")
                             if current_date not in get_dates():
@@ -98,7 +99,9 @@ def login():
                                 entries = db2.fetch().items
                                 for entry in entries:
                                     if entry['date'] == current_date:
-                                        return db2.update({'key':entry['key']},{'text': data})
+                                        key_bytes = entry['key'].encode('utf-8')  # Convert key to bytes
+                                        return db2.update({'key': key_bytes}, {'text': data})
+
 
 
                         def get_data(user):
