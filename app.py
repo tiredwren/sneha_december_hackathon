@@ -23,14 +23,14 @@ from streamlit_webrtc import VideoTransformerFactory, webrtc_streamer, VideoTran
 
 import functions.home, functions.ai, functions.emo, functions.add 
 
-users = fetch_users()
+user_list = fetch_users()
 emails = []
 usernames = []
 passwords = []
 
 def login(users, emails, usernames, passwords):
 
-    for user in users:
+    for user in user_list:
         emails.append(user['key'])
         usernames.append(user['username'])
         passwords.append(user['password'])
@@ -88,8 +88,7 @@ def login(users, emails, usernames, passwords):
                         db2 = deta.Base('diary')
 
                         user = current_user()
-                    
-                    
+                
                     
                         def save_data(data):
                             current_date = datetime.now().strftime("%Y/%m/%d")
@@ -197,4 +196,4 @@ def login(users, emails, usernames, passwords):
 
     
 if __name__ == '__main__':
-    login(users, emails, passwords, usernames)
+    login(user_list, emails, passwords, usernames)
