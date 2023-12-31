@@ -99,12 +99,13 @@ def login():
                         def get_data(user, date):
                             entries = db2.fetch().items
                             for entry in entries:
-                                st.write(entry)
-                                if entry['username'] == user:
-                                #and entry['key'] == date and entry['text']!=None:
+                                print(f"Checking entry: {entry}")
+                                if entry['username'] == user and entry['key'] == date and entry['text'] is not None:
+                                    print("Match found!")
                                     return entry['text']
-                                else:
-                                    return "can't find entry"
+                            print("No match found.")
+                            return ""
+
 
                         def get_dates():
                             entries = db2.fetch().items
