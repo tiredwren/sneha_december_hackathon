@@ -4,7 +4,7 @@ streamlit
 pandas
 datetime
 localStoragePy
-opencv-python
+opencv-python-headless
 tensorflow
 keras-models
 Keras-Preprocessing
