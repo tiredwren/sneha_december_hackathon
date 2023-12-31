@@ -104,7 +104,10 @@ def login():
 
                         def get_dates():
                             entries = db2.fetch().items
-                            dates = [entry['date'] for entry in entries if entry['username'] == user]
+                            dates = [] 
+                            for entry in entries:
+                                if entry['username'] == user:
+                                    dates.append(entry['date'])
                             return dates
                         
                         def function():
