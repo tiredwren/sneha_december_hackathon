@@ -91,7 +91,7 @@ def login():
 
                         def save_data(data):
                             current_date = datetime.now().strftime("%Y/%m/%d")
-                            if current_date not in db2:
+                            if current_date not in get_dates():
                                 return db2.put({'username': user, 'date': current_date, 'text': data})
 
 
