@@ -199,4 +199,4 @@ def login(users, emails, usernames, passwords):
 
     
 if __name__ == '__main__':
-    login()
+    login(users, emails, passwords, usernames)
