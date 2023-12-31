@@ -100,7 +100,7 @@ def login():
                             entries = db2.fetch().items
                             for entry in entries:
                                 st.write(entry)
-                                if entry['username'] == user and entry['key'] == date and entry['text']!=None:
+                                if entry['username'] == user #and entry['key'] == date and entry['text']!=None:
                                     return entry['text']
                                 else:
                                     return "can't find entry"
