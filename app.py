@@ -99,8 +99,9 @@ def login():
                                 entries = db2.fetch().items
                                 for entry in entries:
                                     if entry['date'] == current_date:
-                                        key_bytes = entry['key'].encode('utf-8')  # Convert key to bytes
-                                        return db2.update({'key': key_bytes}, {'text': data})
+                                        key_str = entry['key']
+                                        return db2.update(key_str, {'text': data})
+
 
 
 
