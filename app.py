@@ -99,8 +99,9 @@ def login():
                         def get_data(user, date):
                             entries = db2.fetch().items
                             for entry in entries:
+                                st.write(entry)
                                 if entry['username'] == user and entry['key'] == date and entry['text']!=None:
-                                    st.write(entry['text'])
+                                    
                                     return entry['text']
                                 else:
                                     return ""
