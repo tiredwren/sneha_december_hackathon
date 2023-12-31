@@ -110,7 +110,9 @@ def login():
                             for entry in entries:
                                 if entry['username'] == user:
                                     dates.append(entry['key'])
+                            st.write(dates)
                             return dates
+                        
                         
                         def function():
 
