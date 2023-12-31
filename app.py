@@ -28,7 +28,7 @@ emails = []
 usernames = []
 passwords = []
 
-def login(users, emails, usernames, passwords):
+def login(user_list, emails, usernames, passwords):
 
     for user in user_list:
         emails.append(user['key'])
@@ -144,7 +144,7 @@ def login(users, emails, usernames, passwords):
                                     if old_text == None:
                                         pass
                                     else:
-                                        db2.delete({'username': bytes(user), 'key': bytes(str(today_date)), 'text': bytes(str(old_text))})
+                                        db2.delete({'username': bytes(user, 'utf-8'), 'key': bytes(str(today_date),'utf-8'), 'text': bytes(str(old_text),'utf-8')})
                                     save_data(data)
                                     success_message.empty()
 
