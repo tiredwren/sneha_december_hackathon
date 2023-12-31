@@ -90,21 +90,22 @@ def login():
                         user = current_user()
 
                         def save_data(data):
-                            current_time = datetime.now().strftime("%Y/%m/%d")
-                            return db2.put({'key': current_time, 'username': user, 'text': data})
+                            current_date = datetime.now().strftime("%Y/%m/%d")
+                            current_time = datetime.now().strftime("%Y/%m/%d %H/%m/%s")
+                            return db2.put({'key': current_time, 'username': user, 'date': current_date, 'text': data})
 
 
                         def get_data(user):
                             entries = db2.fetch().items
                             for entry in entries:
-                                if entry['username'] == user and entry['key'] == datetime.now().strftime("%Y/%m/%d") and entry['text']!=None:
+                                if entry['username'] == user and entry['date'] == datetime.now().strftime("%Y/%m/%d") and entry['text']!=None:
                                     return entry['text']
                                 else:
                                     return ""
 
                         def get_dates():
                             entries = db2.fetch().items
-                            dates = [entry['key'] for entry in entries if entry['username'] == user]
+                            dates = [entry['date'] for entry in entries if entry['username'] == user]
                             return dates
                         
                         def function():
@@ -142,10 +143,9 @@ def login():
                                     col1, col2 = st.columns(2)
                                     with col1:
                                         st.caption("date")
-                                        #st.write(load_data(key))
-                                        keys = get_dates()
-                                        for key in keys:
-                                            if st.button(f"{key}"):
+                                        dates = get_dates()
+                                        for date in dates:
+                                            if st.button(f"{date}"):
                                                 st.write(get_data(user))
                                                 with col2:
                                                     st.caption("mood")
