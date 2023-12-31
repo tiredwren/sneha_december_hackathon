@@ -18,11 +18,8 @@ def insert_user(email, username, password):
 
 def fetch_users():
     try:
-        if users != []:
-            pass
-        else:
-            users = db.fetch()
-            return users.items
+        users = db.fetch()
+        return users.items
     except Exception as e:
         st.error(f"Error fetching users from Deta: {e}")
         st.write("in fetch_users")
