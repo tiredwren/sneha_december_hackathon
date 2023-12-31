@@ -92,7 +92,7 @@ def login():
                     
                     
                         def save_data(data):
-                            current_date = datetime.now().strftime("%Y/%m/%d")
+                            current_date = datetime.now().strftime("%m/%d/%Y")
                             return db2.put({'username': user, 'key': current_date, 'text': data})
 
 
