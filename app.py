@@ -98,7 +98,8 @@ def login():
                                 for entry in entries:
                                     if entry['date'] == current_date:
                                         old_text=entry['text'] 
-                                db2.delete({'username': user, 'date': current_date, 'text': old_text})
+                                        old_key=entry['key'] 
+                                db2.delete({'key':old_key,'username': user, 'date': current_date, 'text': old_text})
                                 return db2.put({'username': user, 'date': current_date, 'text': data})
 
 
