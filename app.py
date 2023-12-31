@@ -25,7 +25,10 @@ import functions.home, functions.ai, functions.emo, functions.add
 
 
 def login():
-    users = fetch_users()
+    if users != []:
+        users = users
+    else:
+        users = fetch_users()
     emails = []
     usernames = []
     passwords = []
@@ -102,7 +105,6 @@ def login():
                                 st.write(entry)
                                 if entry['username'] == user:
                                 #and entry['key'] == date and entry['text']!=None:
-                                    st.write(entry)
                                     return entry['text']
                                 else:
                                     return "can't find entry"
