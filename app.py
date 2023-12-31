@@ -94,14 +94,7 @@ def login(users, emails, usernames, passwords):
                     
                         def save_data(data):
                             current_date = datetime.now().strftime("%Y/%m/%d")
-                            
-                            entries = db2.fetch().items
-                            existing_entry = next((entry for entry in entries if entry['username'] == user and entry['key'] == current_date), None)
-
-                            if existing_entry:
-                                db2.update({'text': data}, existing_entry.key)
-                            else:
-                                db2.put({'username': user, 'key': current_date, 'text': data})
+                            db2.put({'username': user, 'key': current_date, 'text': data})
 
                         def get_data(user, date):
                             entries = db2.fetch().items
@@ -149,6 +142,11 @@ def login(users, emails, usernames, passwords):
 
                                     # THIS IS NEW : SETTING IN LOCAL STORAGE
                                     data = current_diary_entry
+                                    old_text = get_data(user, today_date)
+                                    if old_text == None:
+                                        pass
+                                    else:
+                                        db2.delete({'username': user, 'key': date, 'text': data})
                                     save_data(data)
                                     success_message.empty()
 
@@ -160,6 +158,7 @@ def login(users, emails, usernames, passwords):
                                         dates = get_dates()
                                         for date in dates:
                                             if st.button(f"{date}"):
+                                                
                                                 st.write(get_data(user, date))
                                                 with col2:
                                                     st.caption("mood")
