@@ -93,14 +93,13 @@ def login():
                     
                         def save_data(data):
                             current_date = datetime.now().strftime("%Y/%m/%d")
-                        
                             return db2.put({'username': user, 'key': current_date, 'text': data})
 
 
-                        def get_data(user):
+                        def get_data(user, date):
                             entries = db2.fetch().items
                             for entry in entries:
-                                if entry['username'] == user and entry['key'] == datetime.now().strftime("%Y/%m/%d") and entry['text']!=None:
+                                if entry['username'] == user and entry['key'] == date and entry['text']!=None:
                                     return entry['text']
                                 else:
                                     return ""
@@ -151,8 +150,9 @@ def login():
                                         dates = get_dates()
                                         for date in dates:
                                             if st.button(f"{date}"):
-                                                st.write(get_data(user))
+                                                st.write(get_data(user, date))
                                                 with col2:
+                                                    st.write(get_data(user))
                                                     st.caption("mood")
                                                     prediction = predict_emotions(get_data(user))
                                                     probability = get_prediction_proba(get_data(user))

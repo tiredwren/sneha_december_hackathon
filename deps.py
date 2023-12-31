@@ -22,6 +22,7 @@ def fetch_users():
         return users.items
     except Exception as e:
         st.error(f"Error fetching users from Deta: {e}")
+        st.write("in fetch_users")
         return []
 
 
