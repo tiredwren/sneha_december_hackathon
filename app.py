@@ -130,7 +130,7 @@ def login():
 
 
                             if selected=="today":
-                                current_diary_entry = st.text_area("Today's Entry (" + today_date + "):", value=get_data(user))
+                                current_diary_entry = st.text_area("Today's Entry (" + today_date + "):", value=get_data(user,date))
 
                                 if st.button("save"):
                                     # generate success message:
@@ -152,10 +152,9 @@ def login():
                                             if st.button(f"{date}"):
                                                 st.write(get_data(user, date))
                                                 with col2:
-                                                    st.write(get_data(user))
                                                     st.caption("mood")
-                                                    prediction = predict_emotions(get_data(user))
-                                                    probability = get_prediction_proba(get_data(user))
+                                                    prediction = predict_emotions(get_data(user,date))
+                                                    probability = get_prediction_proba(get_data(user,date))
                                                     st.write("{}".format(prediction))
                                                     st.write("confidence: {}".format(np.max(probability)))
 
