@@ -1,3 +1,4 @@
+import pytz
 import streamlit as st
 import streamlit_authenticator as stauth
 from deps import sign_up, fetch_users
@@ -29,8 +30,6 @@ def login():
         st.session_state.users = fetch_users()
 
     users = st.session_state.users
-
-    st.write(users)
     emails = []
     usernames = []
     passwords = []
@@ -96,8 +95,7 @@ def login():
                 
                     
                         def save_data(data):
-                            current_date = datetime.now().strftime("%Y/%m/%d")
-                            st.write("in save data")
+                            current_date = datetime.now(pytz.timezone('US/Pacific')).strftime("%Y/%m/%d")
                             dates = get_dates()
                             if current_date in dates:
 
@@ -131,8 +129,7 @@ def login():
                             st.title("Personal Diary :notebook:")
 
                             # access current date:
-                            today_date = datetime.now().strftime("%Y/%m/%d")
-                            st.write(today_date)
+                            today_date = datetime.now(pytz.timezone('US/Pacific')).strftime("%Y/%m/%d")
 
                             # change view based on what menu button user clicks
                             selected = option_menu(
