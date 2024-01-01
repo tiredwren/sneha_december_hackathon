@@ -10,6 +10,8 @@ deta = Deta(DETA_KEY)
 
 db = deta.Base('recognize')
 
+db.put(({'key': "email", 'username': "username", 'password': "password", 'date_joined': "date_joined"}))
+
 
 def insert_user(email, username, password):
     date_joined = str(datetime.datetime.now())
