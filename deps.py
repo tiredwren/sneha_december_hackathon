@@ -19,6 +19,9 @@ def insert_user(email, username, password):
 def fetch_users():
     users = db.fetch()
     user_list = users.items
+    while users.last:
+        users = db.fetch(last=users.last)
+        user_list += users.items
     return user_list
     
 
