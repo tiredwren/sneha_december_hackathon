@@ -152,10 +152,11 @@ def login():
                                         pass
                                     else:
                                         db2.delete({
-                                            'username': user,
-                                            'key': str(today_date),
-                                            'text': str(old_text)
-                                        })
+                                        'username': user.encode('utf-8'),
+                                        'key': today_date.encode('utf-8'),
+                                        'text': old_text.encode('utf-8')
+                                    })
+
 
                                     save_data(data)
                                     success_message.empty()
