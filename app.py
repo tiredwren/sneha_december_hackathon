@@ -40,7 +40,9 @@ def login():
         passwords.append(user['password'])
 
     credentials = {'usernames': {}}
-    
+    for index in range(len(emails)):
+                credentials['usernames'][usernames[index]] = {'name': emails[index], 'password': passwords[index]}
+
 
     sign_up()
 
@@ -188,9 +190,6 @@ def login():
                 with info:
                     st.warning('Please feed in your credentials')
         else:
-            for index in range(len(emails)):
-                credentials['usernames'][usernames[index]] = {'name': emails[index], 'password': passwords[index]}
-
             Authenticator = stauth.Authenticate(credentials, cookie_name='Streamlit', key='abcdef', cookie_expiry_days=4)
 
             email, authentication_status, username = Authenticator.login(':green[log in]', 'main')
