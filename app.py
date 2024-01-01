@@ -30,6 +30,7 @@ usernames = []
 passwords = []
 
 def login(users, emails, usernames, passwords):
+    st.write(users)
 
     for user in users:
         emails.append(user['key'])

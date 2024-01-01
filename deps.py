@@ -22,7 +22,7 @@ def fetch_users():
         return users
     except Exception as e:
         # Log the exception or print it for debugging
-        print(f"Error fetching users: {e}")
+        st.write(f"Error fetching users: {e}")
         return None  # or handle the error in an appropriate way
 
     
