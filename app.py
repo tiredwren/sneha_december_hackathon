@@ -24,6 +24,7 @@ from streamlit_webrtc import VideoTransformerFactory, webrtc_streamer, VideoTran
 import functions.home, functions.ai, functions.emo, functions.add 
 
 user_list = fetch_users()
+st.write(user_list)
 emails = []
 usernames = []
 passwords = []
