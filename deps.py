@@ -22,7 +22,7 @@ def fetch_users():
     while users.last:
         users = db.fetch(last=users.last)
         user_list += users.items
-    users.close()
+    users.items = 0
     return user_list
     
 
