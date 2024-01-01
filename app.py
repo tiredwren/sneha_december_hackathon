@@ -98,12 +98,13 @@ def login():
                         def save_data(data):
                             current_date = datetime.now().strftime("%Y/%m/%d")
                             st.write("in save data")
-                            if current_date in get_dates():
+                            dates = get_dates()
+                            if current_date in dates:
 
                                 updates = {"text": data}
                                 db2.update(updates, current_date)
 
-                            if current_date not in get_dates:
+                            if current_date not in dates:
                                 db2.put({'username': user, 'text': data}, current_date)
 
                         def get_data(user, date):
