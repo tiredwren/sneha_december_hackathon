@@ -30,7 +30,8 @@ def login():
         st.session_state.users = fetch_users()
 
     users = st.session_state.users
-    usernames = [user['username'] for user in users]
+    for user in users:
+        usernames = user['usernames']
 
     entered_username = st.text_input("Enter your username:")
 
