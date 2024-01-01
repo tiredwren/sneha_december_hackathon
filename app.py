@@ -96,9 +96,15 @@ def login():
                 
                     
                         def save_data(data):
-                            st.write("in save data")
                             current_date = datetime.now().strftime("%Y/%m/%d")
-                            db2.put({'username': user, 'text': data}, current_date)
+                            st.write("in save data")
+                            if current_date in get_dates():
+
+                                updates = {"text": data}
+                                db2.update(updates, current_date)
+
+                            if current_date not in get_dates:
+                                db2.put({'username': user, 'text': data}, current_date)
 
                         def get_data(user, date):
                             entries = db2.fetch().items
@@ -147,17 +153,6 @@ def login():
 
                                     # THIS IS NEW : SETTING IN LOCAL STORAGE
                                     data = current_diary_entry
-                                    old_text = get_data(user, today_date)
-                                    if old_text == None:
-                                        pass
-                                    else:
-                                        db2.delete({
-                                        'username': user.encode('utf-8'),
-                                        'key': today_date.encode('utf-8'),
-                                        'text': old_text.encode('utf-8')
-                                    })
-
-
                                     save_data(data)
                                     success_message.empty()
 
