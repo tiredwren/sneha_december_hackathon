@@ -23,14 +23,16 @@ from streamlit_webrtc import VideoTransformerFactory, webrtc_streamer, VideoTran
 
 import functions.home, functions.ai, functions.emo, functions.add 
 
-users = fetch_users()
-st.write(users)
-emails = []
-usernames = []
-passwords = []
-
-def login(users, emails, usernames, passwords):
+def login():
     st.write(users)
+
+    if 'users' not in st.session_state:
+        st.session_state.users = fetch_users()
+        users = fetch_users()
+    st.write(users)
+    emails = []
+    usernames = []
+    passwords = []
 
     for user in users:
         emails.append(user['key'])
@@ -198,4 +200,4 @@ def login(users, emails, usernames, passwords):
 
     
 if __name__ == '__main__':
-    login(users, emails, passwords, usernames)
+    login()
