@@ -19,8 +19,7 @@ def insert_user(email, username, password):
 def fetch_users():
     try:
         users = db.fetch()
-        user_list = users.items
-        return user_list
+        return users
     except Exception as e:
         # Log the exception or print it for debugging
         print(f"Error fetching users: {e}")
