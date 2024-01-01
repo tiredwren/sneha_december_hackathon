@@ -25,10 +25,11 @@ import functions.home, functions.ai, functions.emo, functions.add
 
 def login():
 
-
     if 'users' not in st.session_state:
-        st.session_state.users = users
-        users = fetch_users()
+        st.session_state.users = fetch_users()
+
+    users = st.session_state.users
+
     st.write(users)
     emails = []
     usernames = []
