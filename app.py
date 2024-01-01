@@ -96,6 +96,7 @@ def login():
                 
                     
                         def save_data(data):
+                            st.write("in save data")
                             current_date = datetime.now().strftime("%Y/%m/%d")
                             db2.put({'username': user, 'text': data}, current_date)
 
@@ -124,6 +125,7 @@ def login():
 
                             # access current date:
                             today_date = datetime.now().strftime("%Y/%m/%d")
+                            st.write(today_date)
 
                             # change view based on what menu button user clicks
                             selected = option_menu(
@@ -149,7 +151,12 @@ def login():
                                     if old_text == None:
                                         pass
                                     else:
-                                        db2.delete({'username': bytes(user, 'utf-8'), 'key': bytes(str(today_date),'utf-8'), 'text': bytes(str(old_text),'utf-8')})
+                                        db2.delete({
+                                            'username': user,
+                                            'key': str(today_date),
+                                            'text': str(old_text)
+                                        })
+
                                     save_data(data)
                                     success_message.empty()
 
