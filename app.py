@@ -196,7 +196,7 @@ def login():
                 with info:
                     st.warning('Please feed in your credentials')
         else:
-            sign_up
+            sign_up()
             with info:
                 st.warning('Username does not exist, please sign up')
 
