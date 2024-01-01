@@ -41,9 +41,15 @@ def login():
 
     credentials = {'usernames': {}}
     for index in range(len(emails)):
-                credentials['usernames'][usernames[index]] = {'name': emails[index], 'password': passwords[index]}
+        credentials['usernames'][usernames[index]] = {'name': emails[index], 'password': passwords[index]}
 
+    Authenticator = stauth.Authenticate(credentials, cookie_name='Streamlit', key='abcdef', cookie_expiry_days=4)
 
+    email, authentication_status, username = Authenticator.login(':green[log in]', 'main')
+
+    info, info1 = st.columns(2)
+
+    st.write("or")
     sign_up()
 
     if username:
@@ -189,12 +195,9 @@ def login():
             else:
                 with info:
                     st.warning('Please feed in your credentials')
-        else:
-            Authenticator = stauth.Authenticate(credentials, cookie_name='Streamlit', key='abcdef', cookie_expiry_days=4)
-
-            email, authentication_status, username = Authenticator.login(':green[log in]', 'main')
-
-            info, info1 = st.columns(2)
+        elif username!="":
+            with info:
+                st.warning('Username does not exist, please sign up')
 
     
 if __name__ == '__main__':
