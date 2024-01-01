@@ -24,10 +24,10 @@ from streamlit_webrtc import VideoTransformerFactory, webrtc_streamer, VideoTran
 import functions.home, functions.ai, functions.emo, functions.add 
 
 def login():
-    st.write(users)
+
 
     if 'users' not in st.session_state:
-        st.session_state.users = fetch_users()
+        st.session_state.users = users
         users = fetch_users()
     st.write(users)
     emails = []
