@@ -49,9 +49,7 @@ def login():
 
     info, info1 = st.columns(2)
 
-    if not authentication_status:
-        st.write("or")
-        sign_up()
+    sign_up()
 
     if username:
         def current_user():
