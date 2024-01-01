@@ -49,8 +49,9 @@ def login():
 
     info, info1 = st.columns(2)
 
-    st.write("or")
-    sign_up()
+    if not authentication_status:
+        st.write("or")
+        sign_up()
 
     if username:
         def current_user():
@@ -195,10 +196,9 @@ def login():
             else:
                 with info:
                     st.warning('Please feed in your credentials')
-        elif username!="":
-            st.write(username)
+        else:
             with info:
-                st.warning('Username does not exist, please sign up')
+                st.warning('Username does not exist, Please Sign up')
 
     
 if __name__ == '__main__':
